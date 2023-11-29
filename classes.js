@@ -109,7 +109,10 @@ function setup()
     {
       Board[i] = new Cell(x,y,BackgroundColor,i,"white","empty",i);
       Board[i].drawCell();
+      if (dev)
+      {
       Board[i].drawText();
+      }
       if (x == Columns)
       {
         x = 1;

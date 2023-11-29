@@ -1,3 +1,7 @@
+const settings = document.createElement('script');
+settings.type = 'text/javascript';
+settings.src = 'settings.js';
+document.head.appendChild(settings);
 const classes = document.createElement('script');
 classes.type = 'text/javascript';
 classes.src = 'classes.js';
