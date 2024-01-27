@@ -9,9 +9,11 @@ const SpacesOnGrid = Rows * Columns;
 document.getElementById("canvas").width = CanvasWidth;
 document.getElementById("canvas").height = CanvasHeight;
 var Board = [];
+var Cell1 = new Cell(1,1,"blue",true,"dummy.png","cellEngine");
+Cell1.drawCell();
 function tick()
 {
-  
+    
 }
 setup()
 const ticks = setInterval(tick, 1000 / TicksPerSec)

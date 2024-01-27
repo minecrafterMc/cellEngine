@@ -1,6 +1,6 @@
 class Cell
 {
-  constructor(x,y,color,text,textColor,CellType,id)
+  constructor(x,y,color,addtexture,image,CellType,id)
   //id should only be used with cells of "empty" type
   {
     //bx and by stand for "board x/y" 
@@ -12,34 +12,38 @@ class Cell
     this.x = OutlineSize + (x - 1) * CellWidth + (x - 1) * BorderSize;
     this.y = OutlineSize + (y - 1) * CellHeight + (y - 1) * BorderSize;
     this.bp = x * 1 + (y - 1) * Columns;
+    if (addtexture)
+    {
+      this.useTexture = true;
+      this.texture = image;
+    }
+    else{
+      this.useTexture = false;
+    }
     if (CellType != "empty")
     {
     this.color = color;
-    this.text = text;
     this.CellType = CellType;
-    this.textColor = textColor;
-    this.textSize = CellWidth / text.length;
     }
     else 
     {
       this.color = BackgroundColor;
-      this.text = text;
       this.CellType = "empty";
-      this.textColor = "darkred";
-      this.textSize = CellWidth / text.length;
       this.id = id;
     }
   }
   drawCell()
   {
+    if (!this.useTexture)
+    {
     ctx.fillStyle = this.color;
     ctx.fillRect(this.x,this.y,CellWidth,CellHeight);
   }
-  drawText()
-  {
-    ctx.fillStyle = this.textColor;
-    ctx.font = this.textSize + "px Arial";
-    ctx.fillText(this.text, this.x + CellWidth / 3, this.y + CellHeight /1.2);
+  else{
+    let img = document.createElement("img");
+    img.src = this.texture;
+    ctx.drawImage(img,this.x,this.y);
+  }
   }
   move(x,y)
   {
@@ -47,8 +51,8 @@ class Cell
     {
     let ocolor = this.color;
     let otcolor = this.textColor;
-    this.color = BackgroundColor;
-    this.drawCell();
+    ctx.fillStyle = BackgroundColor;
+    ctx.fillRect(this.x,this.y,CellWidth,CellHeight);
     this.color = ocolor;
     this.textColor = otcolor;
     this.bx += x;
@@ -57,7 +61,6 @@ class Cell
     this.x = OutlineSize + (this.bx - 1) * CellWidth + (this.bx - 1) * BorderSize;
     this.y = OutlineSize + (this.by - 1) * CellHeight + (this.by - 1) * BorderSize;
     this.drawCell();
-    this.drawText();
     }
   }
     tp(x,y)
@@ -72,7 +75,6 @@ class Cell
       this.x = OutlineSize + (this.bx - 1) * CellWidth + (this.bx - 1) * BorderSize;
       this.y = OutlineSize + (this.by - 1) * CellHeight + (this.by - 1) * BorderSize;
       this.drawCell();
-      this.drawText();
     }
     changetype(to)
     {
